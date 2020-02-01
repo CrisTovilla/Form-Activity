@@ -12,7 +12,7 @@
   <section class="section">
     <div class="columns is-mobile is-centered">
       <div class="column is-is-three-fifths-mobile  is-half-desktop box">
-        <form method="POST" action="upload" enctype="multipart/form-data">
+        <form method="POST" action='{{ route('FormPostController.store') }}' enctype="multipart/form-data">
           {{ csrfField() }}
           
           <h1 class="title is-1 has-text-centered">Formulario</h1>
@@ -22,7 +22,7 @@
               <div class="field">
                 <label class="label">Nombre</label>
                 <div class="control has-icons-left ">
-                  <input class="input" type="text" placeholder="Ingresa tu Nombre" name="input-name">
+                  <input class="input" type="text" placeholder="Ingresa tu Nombre" name="name">
                   <span class="icon is-small is-left">
                   <i class="fas fa-sticky-note"></i>
                 </span>
@@ -32,7 +32,7 @@
               <div class="field">
                 <label class="label">Edad</label>
                 <div class="control has-icons-left ">
-                  <input class="input" type="number" placeholder="Ingresa tu Edad" name="input-age">
+                  <input class="input" type="number" placeholder="Ingresa tu Edad" name="age">
                   <span class="icon is-small is-left">
                   <i class="fas fa-blind"></i>
                 </span>
@@ -45,7 +45,7 @@
           <div class="field">
             <label class="label">Puesto de Trabajo</label>
             <div class="control has-icons-left ">
-              <input class="input" type="text" placeholder="Ingresa tu posición actual" name="input-job">
+              <input class="input" type="text" placeholder="Ingresa tu posición actual" name="job_position">
               <span class="icon is-small is-left">
                 <i class="fas fa-address-card"></i>
               </span>
@@ -58,7 +58,7 @@
               <div class="field">
                 <label class="label">Email</label>
                 <div class="control has-icons-left ">
-                  <input class="input" type="email" placeholder=" Ingresa tu Email" name="input-email" value="{{old('email','')}}">
+                  <input class="input" type="email" placeholder=" Ingresa tu Email" name="email" value="{{old('email','')}}">
                   {{elIf ('<p class="help is-danger">This email is invalid</p>',getErrorFor('email'),hasErrorFor('email'))}}
                   <span class="icon is-small is-left">
                     <i class="fas fa-envelope"></i>
@@ -69,7 +69,7 @@
               <div class="field">
                 <label class="label">Telefono</label>
                 <div class="control has-icons-left ">
-                  <input class="input" type="number" placeholder="Ingresa tu Número de telefono" name="input-phone">
+                  <input class="input" type="number" placeholder="Ingresa tu Número de telefono" name="phone_number">
                   <span class="icon is-small is-left">
                   <i class="fas fa-phone"></i>
                 </span>
@@ -85,7 +85,7 @@
           <div class="field">
             <label class="label">Ubicación</label>
             <div class="control has-icons-left ">
-              <input class="input" type="email" placeholder="Ingresa tu Ubicación" name="input-location">
+              <input class="input" type="text" placeholder="Ingresa tu Ubicación" name="location">
               <span class="icon is-small is-left">
                 <i class="fas fa-globe"></i>
               </span>
@@ -97,7 +97,7 @@
           <div class="field">
             <label class="label">Compañia</label>
             <div class="control has-icons-left ">
-              <input class="input" type="text" placeholder="Ingresa el nombre de tu Compañia" name="input-company">
+              <input class="input" type="text" placeholder="Ingresa el nombre de tu Compañia" name="company">
               <span class="icon is-small is-left">
                 <i class="fas fa-building"></i>
               </span>
@@ -110,7 +110,7 @@
 
           <div  class="file has-name">
             <label class="file-label">
-              <input id="file-upload" class="file-input" type="file" name="profile_pics[]" multiple onchange="javascript:updateList()" accept=".pdf, .jpg, .jpeg" />
+              <input id="file-upload" class="file-input" type="file" name="files_post[]" multiple onchange="javascript:updateList()" accept=".pdf, .jpg, .jpeg" />
               <span class="file-cta">
                 <span class="file-icon">
                   <i class="fas fa-upload"></i>

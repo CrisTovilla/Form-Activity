@@ -22,7 +22,8 @@
               <div class="field">
                 <label class="label">Nombre</label>
                 <div class="control has-icons-left ">
-                  <input class="input" type="text" placeholder="Ingresa tu Nombre" name="name">
+                  <input class="input" type="text" placeholder="Ingresa tu Nombre" name="name" value="{{old('name','')}}" required>
+                  {{elIf ('<p class="help is-danger">Nombre no Válido(Exceso de Caracteres)</p>',getErrorFor('name'),hasErrorFor('name'))}}
                   <span class="icon is-small is-left">
                   <i class="fas fa-sticky-note"></i>
                 </span>
@@ -32,7 +33,8 @@
               <div class="field">
                 <label class="label">Edad</label>
                 <div class="control has-icons-left ">
-                  <input class="input" type="number" placeholder="Ingresa tu Edad" name="age">
+                  <input class="input" type="number" placeholder="Ingresa tu Edad" name="age"  value="{{old('age','')}}" required>
+                  {{elIf ('<p class="help is-danger">Edad no Valida</p>',getErrorFor('age'),hasErrorFor('age'))}}
                   <span class="icon is-small is-left">
                   <i class="fas fa-blind"></i>
                 </span>
@@ -45,7 +47,8 @@
           <div class="field">
             <label class="label">Puesto de Trabajo</label>
             <div class="control has-icons-left ">
-              <input class="input" type="text" placeholder="Ingresa tu posición actual" name="job_position">
+              <input class="input" type="text" placeholder="Ingresa tu posición actual" name="job_position" value="{{old('job_position','')}}" required>
+              {{elIf ('<p class="help is-danger">Exceso de Caracteres</p>',getErrorFor('job_position'),hasErrorFor('job_position'))}}
               <span class="icon is-small is-left">
                 <i class="fas fa-address-card"></i>
               </span>
@@ -58,8 +61,8 @@
               <div class="field">
                 <label class="label">Email</label>
                 <div class="control has-icons-left ">
-                  <input class="input" type="email" placeholder=" Ingresa tu Email" name="email" value="{{old('email','')}}">
-                  {{elIf ('<p class="help is-danger">This email is invalid</p>',getErrorFor('email'),hasErrorFor('email'))}}
+                  <input class="input" type="email" placeholder=" Ingresa tu Email" name="email" value="{{old('email','')}}" required>
+                  {{elIf ('<p class="help is-danger">Correo no Valido</p>',getErrorFor('email'),hasErrorFor('email'))}}
                   <span class="icon is-small is-left">
                     <i class="fas fa-envelope"></i>
                   </span>
@@ -69,7 +72,9 @@
               <div class="field">
                 <label class="label">Telefono</label>
                 <div class="control has-icons-left ">
-                  <input class="input" type="number" placeholder="Ingresa tu Número de telefono" name="phone_number">
+                  <input class="input" type="number" placeholder="Ingresa tu Número de telefono" name="phone_number" value="{{old('phone_number','')}}" required>
+                  {{elIf ('<p class="help is-danger">Telefono no Valido</p>',getErrorFor('phone_number'),hasErrorFor('phone_number'))}}
+              
                   <span class="icon is-small is-left">
                   <i class="fas fa-phone"></i>
                 </span>
@@ -85,7 +90,8 @@
           <div class="field">
             <label class="label">Ubicación</label>
             <div class="control has-icons-left ">
-              <input class="input" type="text" placeholder="Ingresa tu Ubicación" name="location">
+              <input class="input" type="text" placeholder="Ingresa tu Ubicación" name="location" value="{{old('location','')}}" required>
+              {{elIf ('<p class="help is-danger">Exceso de Caracteres</p>',getErrorFor('location'),hasErrorFor('location'))}}
               <span class="icon is-small is-left">
                 <i class="fas fa-globe"></i>
               </span>
@@ -97,7 +103,8 @@
           <div class="field">
             <label class="label">Compañia</label>
             <div class="control has-icons-left ">
-              <input class="input" type="text" placeholder="Ingresa el nombre de tu Compañia" name="company">
+              <input class="input" type="text" placeholder="Ingresa el nombre de tu Compañia" name="company" value="{{old('company','')}}" required>
+              {{elIf ('<p class="help is-danger">Exceso de Caracteres</p>',getErrorFor('company'),hasErrorFor('company'))}}
               <span class="icon is-small is-left">
                 <i class="fas fa-building"></i>
               </span>
@@ -110,7 +117,7 @@
 
           <div  class="file has-name">
             <label class="file-label">
-              <input id="file-upload" class="file-input" type="file" name="files_post[]" multiple onchange="javascript:updateList()" accept=".pdf, .jpg, .jpeg" />
+              <input id="file-upload" class="file-input" type="file" name="files_post[]" multiple onchange="javascript:updateList()" accept=".pdf, .jpg, .jpeg" />        
               <span class="file-cta">
                 <span class="file-icon">
                   <i class="fas fa-upload"></i>
@@ -121,7 +128,7 @@
               </span>
             </label>
           </div>
-
+          <p class="help is-danger">Tamaño no debe exceder a 5mb</p>
 
           
           <br>

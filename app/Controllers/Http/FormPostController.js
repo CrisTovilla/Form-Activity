@@ -48,7 +48,11 @@ class FormPostController {
         company
       })
       if(file_posts){
-        await file_posts.moveAll(Helpers.tmpPath('uploads/files-'+formpost.id))
+        await file_posts.moveAll(Helpers.tmpPath('uploads/files-'+formpost.id), (file) => {
+          return {
+            name: `FormPost File ${new Date().getTime()}.${file.subtype}`
+          }
+        })
 
         if (!file_posts.movedAll()) {
           return file_posts.errors()
@@ -58,13 +62,13 @@ class FormPostController {
           let element = file_posts._files[i]
           await File.create({
             form_post_id: formpost.id,
-            filename : element.clientName
+            filename : element.fileName
          })
         }
 
 
       }
-      return response.ok(formpost)
+      return response.redirect('/')
     } catch (error) {
       console.log(error)
       return response.status(404)

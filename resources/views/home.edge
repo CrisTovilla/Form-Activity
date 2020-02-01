@@ -6,6 +6,7 @@
     <title>Formulario</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="/js/main.js"></script>
   </head>
   <body>
   <section class="section">
@@ -57,7 +58,8 @@
               <div class="field">
                 <label class="label">Email</label>
                 <div class="control has-icons-left ">
-                  <input class="input" type="email" placeholder=" Ingresa tu Email" name="input-email">
+                  <input class="input" type="email" placeholder=" Ingresa tu Email" name="input-email" value="{{old('email','')}}">
+                  {{elIf ('<p class="help is-danger">This email is invalid</p>',getErrorFor('email'),hasErrorFor('email'))}}
                   <span class="icon is-small is-left">
                     <i class="fas fa-envelope"></i>
                   </span>
@@ -101,7 +103,10 @@
               </span>
             </div>
           </div>
-
+          
+          
+            <div id="file-list" style="height:200px; display: flex;  overflow-x: auto;">             
+            </div>
 
           <div  class="file has-name">
             <label class="file-label">
@@ -110,16 +115,16 @@
                 <span class="file-icon">
                   <i class="fas fa-upload"></i>
                 </span>
-                <span class="file-label">
-                  Elegir Archivos…
+                <span class="file-label ">
+                  Subir Archivos…
                 </span>
               </span>
             </label>
           </div>
 
-          <div id="file-list">             
-          </div>
 
+          
+          <br>
           <div class="control">
             <button class="button is-link is-fullwidth">Enviar</button>
           </div>
@@ -127,23 +132,7 @@
         </form>
       </div>
     </div>
-  <script>
-    updateList = function() {
-      var input = document.getElementById('file-upload');
-      var output = document.getElementById('file-list');
 
-      output.innerHTML = '<div>';
-      for (var i = 0; i < input.files.length; ++i) {
-        output.innerHTML += "<span class='tag'>"+ input.files.item(i).name + "<button class='delete is-small' onclick='javascript:deleteItem()'></button></span>"
-      }
-      output.innerHTML += '</div>';
-    }
-
-    deleteItem = function(){
-      console.log(this)
-    }
-  </script>
-  
   </section>
   </body>
 </html>

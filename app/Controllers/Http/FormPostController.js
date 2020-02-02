@@ -12,6 +12,14 @@ const Helpers = use('Helpers')
  * Resourceful controller for interacting with formposts
  */
 class FormPostController {
+
+    /**
+   * setup
+   */
+  constructor () {
+    this.page = 1
+    this.perPage = 2
+  }
   /**
    * Show a list of all formposts.
    * GET formposts
@@ -21,7 +29,31 @@ class FormPostController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
+  async index ({ request, auth ,params, view }) {
+    try {
+       // name search
+     let {  perPage } = request.all()
+     let { page } = params
+     //console.log(request)
+     page = page || this.page
+     perPage = perPage || this.perPage
+ 
+     // prepare statement
+     let query = FormPost.query()
+
+     query.with('files')
+
+ 
+     let posts = await query.paginate(page, perPage)
+     //console.log(posts)
+     return view.render('admin', { posts: posts.toJSON() })
+    } catch (error) {
+      console.log(error)
+    }
+    
+    
+
+   
   }
 
 

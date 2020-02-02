@@ -1,5 +1,123 @@
-@loggedIn
-  You are logged in!
-@else
-  <a href="/login">Click here</a> to login.
-@endloggedIn    
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Inicio de Sesión</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="/js/main.js"></script>
+  </head>
+  <body>
+  <section class="section">
+    <div class="columns is-mobile is-centered ">
+      <div class="column   box" >
+        <h1 class="title is-1 has-text-centered">Posts</h1>
+        
+          @each(post in posts.data)
+          <div class="columns is-gapless box">
+            <div class="column is-2 ">  
+              <table class="table  is-striped is-narrow is-hoverable is-fullwidth "  >
+                <thead>
+                </thead>
+                  <th class="has-text-centered">Nombre</th>
+                <tbody>
+                  <td class="has-text-centered">{{post.name}}</td>
+                </tbody>
+              </table>
+            </div>
+            <div class="column is-1">
+              <table class="table  is-striped is-narrow is-hoverable is-fullwidth ">
+                <thead>
+                </thead>
+                  <th class="has-text-centered">Edad</th>
+                <tbody>
+                  <td class="has-text-centered">{{post.age}}</td>
+                </tbody>
+              </table>
+            </div>
+            <div class="column is-2">
+              <table class="table  is-striped is-narrow is-hoverable is-fullwidth ">
+                <thead>
+                </thead>
+                  <th class="has-text-centered">Posición Trabajo</th>
+                <tbody>
+                  <td class="has-text-centered">{{post.job_position}}</td>
+                </tbody>
+              </table>
+            </div>
+            <div class="column is-2">
+              <table class="table  is-striped is-narrow is-hoverable is-fullwidth ">
+                <thead>
+                </thead>
+                  <th class="has-text-centered">Correo</th>
+                <tbody>
+                  <td class="has-text-centered">{{post.email}}</td>
+                </tbody>
+              </table>
+            </div>
+            <div class="column is-1">
+              <table class="table  is-striped is-narrow is-hoverable is-fullwidth ">
+                <thead>
+                </thead>
+                  <th class="has-text-centered">Telefono</th>
+                <tbody>
+                  <td class="has-text-centered">{{post.phone_number}}</td>
+                </tbody>
+              </table>
+            </div>
+            <div class="column is-2">
+              <table class="table  is-striped is-narrow is-hoverable is-fullwidth ">
+                <thead>
+                </thead>
+                  <th class="has-text-centered">Ubicación</th>
+                <tbody>
+                  <td class="has-text-centered">{{post.location}}</td>
+                </tbody>
+              </table>
+            </div>
+            <div class="column is-2">
+              <table class="table  is-striped is-narrow is-hoverable is-fullwidth ">
+                <thead>
+                </thead>
+                  <th class="has-text-centered">Compañia</th>
+                <tbody>
+                  <td class="has-text-centered">{{post.company}}</td>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          @endeach
+        
+        <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+          
+          @if(posts.page-1  != 0)
+            <a class="pagination-previous" title="This is the first page" href="{{ route('FormPostController.index', { page: posts.page-1 }) }}">Página Anterior</a>
+          @else
+             <a class="pagination-previous" title="This is the first page" href="{{ route('FormPostController.index', { page: posts.page-1 }) }}" disabled>Página Anterior</a>
+          @endif
+          
+          @if(posts.page+1  != posts.lastPage+1)
+            <a class="pagination-next" href="{{ route('FormPostController.index', { page: posts.page+1 }) }}">Siguiente Página</a>
+          @else
+            <a class="pagination-next" href="{{ route('FormPostController.index', { page: posts.page+1 }) }}" disabled>Siguiente Página</a>
+          @endif
+          
+          <ul class="pagination-list">
+              @each(page in range(1, posts.lastPage+1))
+                <li>
+                @if(page  == posts.page)
+                  <a class="pagination-link is-current" aria-label="Page {{page}}" aria-current="page" href="{{ route('FormPostController.index', { page: page }) }}" >{{page}}</a>
+                @else
+                  <a class="pagination-link" aria-label="Goto page {{page}}" href="{{ route('FormPostController.index', { page: page }) }}">{{page}}</a>
+                @endif
+                </li>
+            @endeach
+          </ul>
+
+        </nav>
+      </div>
+    </div>
+  </section>
+  </body>
+</html>

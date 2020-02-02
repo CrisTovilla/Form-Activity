@@ -8,7 +8,7 @@ class FileSchema extends Schema {
     this.create('files', (table) => {
       table.increments()
       table.integer('form_post_id').unsigned()
-      table.foreign('form_post_id').references('id').on('form_posts')
+      table.foreign('form_post_id').references('id').on('form_posts').onDelete('CASCADE')
       table.string('filename',50).notNullable()
       table.timestamps()
     })

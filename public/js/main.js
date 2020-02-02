@@ -31,7 +31,7 @@ updateList = function() {
       }                  
     }
     output.innerHTML += '</div>';
-  }
+}
 
   // deleteItem = function(id){
   //   var elem = document.querySelector('#'+id); 

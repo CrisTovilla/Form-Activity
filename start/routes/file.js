@@ -2,12 +2,13 @@
 
 /*
 |--------------------------------------------------------------------------
-| Routes
+| File Routes
 |--------------------------------------------------------------------------
 */
 
-// Router split files
-require('./views')
-require('./formpost')
-require('./auth')
-require('./file')
+const Route = use('Route')
+
+Route.group(() => {
+    Route.get('/:id','FileController.download')
+})
+    .prefix('/api/v1/file')

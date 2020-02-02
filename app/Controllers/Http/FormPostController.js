@@ -4,7 +4,7 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-
+const Drive = use('Drive')
 const FormPost= use('App/Models/FormPost')
 const File= use('App/Models/File')
 const Helpers = use('Helpers')
@@ -29,31 +29,27 @@ class FormPostController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, auth ,params, view }) {
+  async index ({ request, auth ,params, view , response }) {
     try {
-       // name search
-     let {  perPage } = request.all()
-     let { page } = params
+      // name search
+     let { page, perPage } = request.all()
      //console.log(request)
      page = page || this.page
      perPage = perPage || this.perPage
- 
      // prepare statement
      let query = FormPost.query()
-
      query.with('files')
 
- 
      let posts = await query.paginate(page, perPage)
      //console.log(posts)
-     return view.render('admin', { posts: posts.toJSON() })
+     //return response.send({ posts: posts.toJSON() })
+     return view.presenter('FormPostPresenter')
+     .render('admin', {
+      posts: posts.toJSON()
+     })
     } catch (error) {
-      console.log(error)
+      return response.status(500).send('Server Error')  
     }
-    
-    
-
-   
   }
 
 
@@ -80,12 +76,18 @@ class FormPostController {
         company
       })
       if(file_posts){
-        await file_posts.moveAll(Helpers.tmpPath('uploads/files-'+formpost.id), (file) => {
-          return {
-            name: `FormPost File ${new Date().getTime()}.${file.subtype}`
-          }
-        })
-
+        await Promise.all(
+          file_posts.files.map(async file => {
+              let filename
+              if(file.subtype!="pdf")
+                filename = `FormPost File ${new Date().getTime()}.${file.subtype}`
+              else
+                filename = file.clientName
+              await file.move(Helpers.publicPath('uploads/files-'+formpost.id), {
+                  name: filename
+              })
+          })
+        )
         if (!file_posts.movedAll()) {
           return file_posts.errors()
         }
@@ -97,13 +99,10 @@ class FormPostController {
             filename : element.fileName
          })
         }
-
-
       }
       return response.redirect('/')
     } catch (error) {
-      console.log(error)
-      return response.status(404)
+      return response.status(500).send('Server Error')
     }
   }
 
@@ -117,7 +116,26 @@ class FormPostController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
+  async destroy ({ params, request, response , view}) {
+    
+    let { id } = params
+
+    try {
+      const formpost = await FormPost.findOrFail(id)
+      const files = await File
+          .query()
+          .where('form_post_id', '=', id)
+          .fetch()
+  
+      await Drive.delete('files-'+formpost.id)     
+      await formpost.delete()
+      return response.status(200).json(formpost)
+    } catch (error) {
+      return response.status(500).send('Server Error')
+    }
+
+
+    
   }
 }
 

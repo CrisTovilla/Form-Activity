@@ -5,111 +5,103 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Inicio de Sesión</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
-    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-    <script src="/js/main.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script> 
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    {{script('js/app')}}
   </head>
   <body>
   <section class="section">
     <div class="columns is-mobile is-centered ">
       <div class="column   box" >
         <h1 class="title is-1 has-text-centered">Posts</h1>
-        
-          @each(post in posts.data)
-          <div class="columns is-gapless box">
-            <div class="column is-2 ">  
-              <table class="table  is-striped is-narrow is-hoverable is-fullwidth "  >
-                <thead>
-                </thead>
-                  <th class="has-text-centered">Nombre</th>
-                <tbody>
-                  <td class="has-text-centered">{{post.name}}</td>
-                </tbody>
-              </table>
-            </div>
-            <div class="column is-1">
-              <table class="table  is-striped is-narrow is-hoverable is-fullwidth ">
-                <thead>
-                </thead>
-                  <th class="has-text-centered">Edad</th>
-                <tbody>
-                  <td class="has-text-centered">{{post.age}}</td>
-                </tbody>
-              </table>
-            </div>
-            <div class="column is-2">
-              <table class="table  is-striped is-narrow is-hoverable is-fullwidth ">
-                <thead>
-                </thead>
-                  <th class="has-text-centered">Posición Trabajo</th>
-                <tbody>
-                  <td class="has-text-centered">{{post.job_position}}</td>
-                </tbody>
-              </table>
-            </div>
-            <div class="column is-2">
-              <table class="table  is-striped is-narrow is-hoverable is-fullwidth ">
-                <thead>
-                </thead>
-                  <th class="has-text-centered">Correo</th>
-                <tbody>
-                  <td class="has-text-centered">{{post.email}}</td>
-                </tbody>
-              </table>
-            </div>
-            <div class="column is-1">
-              <table class="table  is-striped is-narrow is-hoverable is-fullwidth ">
-                <thead>
-                </thead>
-                  <th class="has-text-centered">Telefono</th>
-                <tbody>
-                  <td class="has-text-centered">{{post.phone_number}}</td>
-                </tbody>
-              </table>
-            </div>
-            <div class="column is-2">
-              <table class="table  is-striped is-narrow is-hoverable is-fullwidth ">
-                <thead>
-                </thead>
-                  <th class="has-text-centered">Ubicación</th>
-                <tbody>
-                  <td class="has-text-centered">{{post.location}}</td>
-                </tbody>
-              </table>
-            </div>
-            <div class="column is-2">
-              <table class="table  is-striped is-narrow is-hoverable is-fullwidth ">
-                <thead>
-                </thead>
-                  <th class="has-text-centered">Compañia</th>
-                <tbody>
-                  <td class="has-text-centered">{{post.company}}</td>
-                </tbody>
-              </table>
-            </div>
+          <table class="table  is-striped is-narrow is-hoverable is-fullwidth "  >
+            <thead>            
+              <th>Nombre</th>
+              <th>Edad</th>
+              <th>Posición de Trabajo</th>
+              <th>Correo</th>
+              <th>Telefono</th>
+              <th>Ubicación</th>
+              <th>Compañia</th>
+              <th></th>
+              <th></th>
+            </thead>
+          <tbody>
+          @each(post in posts.data)   
+            <tr id="{{post.id}}" >
+            <td>{{post.name}}</td>
+            <td>{{post.age}}</td>
+            <td>{{post.job_position}}</td>
+            <td>{{post.email}}</td>
+            <td>{{post.phone_number}}</td>
+            <td>{{post.location}}</td>
+            <td>{{post.company}}</td>
+            @if(post.files.length>0)
+              <td><a class="button is-info"  onClick="javascript:modalOpenFiles({{post.id}})" >Archivos</a></td>
+            @else
+              <td></td>  
+            @endif
+            <td><a class="button is-danger"  onClick="javascript:deleteItem({{post.id}})" >Eliminar</a></td>
+            </tr>
+
+          <div class="modal" id="modal-{{post.id}}"> 
+            <div class="modal-background"></div>
+              <div class="modal-content box">
+                 <div class="columns">
+                  @each(file in post.files)
+                    @if(isImage(file.filename))
+                      <div class="card">
+                        <div class="card-image">
+                          <figure class="image is-128x128">
+                            <img src="{{ assetsUrl('/pdf-icon.png') }}" >
+                          </figure>
+                        </div>
+                        <footer class="card-footer">
+                          <a href="#" class="card-footer-item">Save</a>
+                        </footer>
+                      </div>
+                    @else
+                      <div class="card">
+                        <div class="card-image">
+                          <figure class="image is-128x128">
+                            <img src="{{ assetsUrl('/uploads/files-'+file.form_post_id+'/'+file.filename) }}">
+                          </figure>
+                        </div>
+                        <footer class="card-footer">
+                          <a href="{{ route('FileController.download', { id: file.id }) }}" class="card-footer-item">Save</a>
+                        </footer>
+                      </div>
+                    @endif
+                  @endeach
+                </div> 
+              </div>
+            <button class="modal-close is-large"  onClick="javascript:modalCloseFiles({{post.id}})" aria-label="close"></button>
           </div>
           @endeach
+          </tbody>
+        </table>
         
         <nav class="pagination is-centered" role="navigation" aria-label="pagination">
           
           @if(posts.page-1  != 0)
-            <a class="pagination-previous" title="This is the first page" href="{{ route('FormPostController.index', { page: posts.page-1 }) }}">Página Anterior</a>
+            <a class="pagination-previous" title="This is the first page" href="{{ '?' + append(request.originalUrl(), 'page', posts.page - 1) }}">Página Anterior</a>
           @else
-             <a class="pagination-previous" title="This is the first page" href="{{ route('FormPostController.index', { page: posts.page-1 }) }}" disabled>Página Anterior</a>
+             <a class="pagination-previous" title="This is the first page" href="{{ '?' + append(request.originalUrl(), 'page', posts.page - 1) }}" disabled>Página Anterior</a>
           @endif
           
           @if(posts.page+1  != posts.lastPage+1)
-            <a class="pagination-next" href="{{ route('FormPostController.index', { page: posts.page+1 }) }}">Siguiente Página</a>
+            <a class="pagination-next" href="{{ '?' + append(request.originalUrl(), 'page', posts.page + 1) }}">Siguiente Página</a>
           @else
-            <a class="pagination-next" href="{{ route('FormPostController.index', { page: posts.page+1 }) }}" disabled>Siguiente Página</a>
+            <a class="pagination-next" href="{{ '?' + append(request.originalUrl(), 'page', posts.page + 1) }}" disabled>Siguiente Página</a>
           @endif
           
           <ul class="pagination-list">
               @each(page in range(1, posts.lastPage+1))
                 <li>
                 @if(page  == posts.page)
-                  <a class="pagination-link is-current" aria-label="Page {{page}}" aria-current="page" href="{{ route('FormPostController.index', { page: page }) }}" >{{page}}</a>
+                  <a class="pagination-link is-current" aria-label="Page {{page}}" aria-current="page" href="{{ '?' + append(request.originalUrl(), 'page', page) }}" >{{page}}</a>
                 @else
-                  <a class="pagination-link" aria-label="Goto page {{page}}" href="{{ route('FormPostController.index', { page: page }) }}">{{page}}</a>
+                  <a class="pagination-link" aria-label="Goto page {{page}}" href="{{ '?' + append(request.originalUrl(), 'page', page) }}">{{page}}</a>
                 @endif
                 </li>
             @endeach

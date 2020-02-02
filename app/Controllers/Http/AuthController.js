@@ -6,8 +6,15 @@ class AuthController {
    * Login user.
    * POST users
    */
-  async signin ({  auth,request}) {
-    return await auth.attempt(request.input('email'), request.input('password'))
+  async signin ({  auth,request , response}) {
+    try {
+      await auth.attempt(request.input('email'), request.input('password'))
+      return response.redirect('/admin')
+    } catch (error) {
+      
+    }
+    
+  
   }
 
 }

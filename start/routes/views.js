@@ -13,3 +13,5 @@ const Route = use('Route')
 Route.on('/').render('home')
 
 Route.on('/login').render('login')
+
+Route.on('/admin').render('admin').middleware(['auth_session'])

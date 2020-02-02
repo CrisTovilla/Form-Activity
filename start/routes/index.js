@@ -9,3 +9,4 @@
 // Router split files
 require('./views')
 require('./formpost')
+require('./auth')

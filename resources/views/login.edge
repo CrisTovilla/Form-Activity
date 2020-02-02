@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Inicio de Sesión</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="/js/main.js"></script>
+  </head>
+  <body>
+  <section class="section">
+    <div class="columns is-mobile is-centered">
+      <div class="column is-is-three-fifths-mobile  is-half-desktop box">
+        <form method="POST" action='{{ route('AuthController.signin') }}' enctype="multipart/form-data">
+          {{ csrfField() }}
+          <h1 class="title is-1 has-text-centered">Inicio de Sesión</h1>
+          <div class="field">
+              <p class="control has-icons-left has-icons-right">
+                  <input class="input" type="email" name="email" placeholder="Correo">
+                  <span class="icon is-small is-left">
+                  <i class="fas fa-envelope"></i>
+                  </span>
+                  <span class="icon is-small is-right">
+                  <i class="fas fa-check"></i>
+                  </span>
+              </p>
+          </div>
+          <div class="field">
+              <p class="control has-icons-left">
+                  <input class="input" type="password" name="password" placeholder="Contraseña">
+                  <span class="icon is-small is-left">
+                  <i class="fas fa-lock"></i>
+                  </span>
+              </p>
+          </div>
+          <div class="field">
+              <p class="control">
+                  <button class="button is-success">
+                  Login
+                  </button>
+              </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+  </body>
+</html>

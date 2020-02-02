@@ -2,14 +2,13 @@
 
 /*
 |--------------------------------------------------------------------------
-| View Routes
+| Authentication Routes
 |--------------------------------------------------------------------------
 */
 
-
-/** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.on('/').render('home')
-
-Route.on('/login').render('login')
+Route.group(() => {
+    Route.post('','AuthController.signin')
+})
+    .prefix('/api/v1/auth')

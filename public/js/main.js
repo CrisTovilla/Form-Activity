@@ -9,14 +9,15 @@ updateList = function() {
     //Insert a preview of the Files into the container
     output.innerHTML = '<div>';
     for (var i = 0; i < input.files.length; ++i) {
+      let ext = input.files.item(i).name.split('.').pop()
       //Check the size limit for each file
-      if(input.files.item(i).size>5e6){
+      if(input.files.item(i).size>5e6 || (ext!='pdf' && ext!='jpg' && ext!='jpeg')){
         document.getElementById("danger-size").style= 'visibility:visible;'
         break;
       }
 
       //Insert into the container based on the extension file
-      if(input.files.item(i).name.split('.').pop()=="pdf"){
+      if(ext=="pdf"){
           output.innerHTML += 
                 "<div class='card'  style='width:128px; height:128px; margin-left:10px; margin-top:10px;'>"+
                   "<header class='card-header header-file' >"+
@@ -30,7 +31,7 @@ updateList = function() {
                     "</figure>"+
                   "</div>"+
                 "</div>"
-      }else{  
+      }else if(ext=="jpg" || ext=="jpeg"){  
         //Use of Reader to get The data from each file
         var reader = new FileReader();
         reader.fileName =  input.files.item(i).name

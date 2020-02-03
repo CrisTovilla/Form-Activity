@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html  >
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,14 +7,20 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <script src="/js/main.js"></script>
+    {{style('css/style.css')}}
   </head>
-  <body>
-  <section class="section">
-    <div class="columns is-mobile is-centered">
-      <div class="column is-is-three-fifths-mobile  is-half-desktop box">
+  <body >
+  <section class="section" >
+    <div class="columns is-mobile is-centered" >
+      <div class="column is-half-desktop box" >
         <form method="POST" action='{{ route('AuthController.signin') }}' enctype="multipart/form-data">
           {{ csrfField() }}
           <h1 class="title is-1 has-text-centered">Inicio de Sesión</h1>
+          <div class='card-content is-flex' style="justify-content: center;">
+            <figure class="image is-128x128" >
+              <img src="{{ assetsUrl('/user.png') }}">
+            </figure>
+          </div>
           <div class="field">
               <p class="control has-icons-left has-icons-right">
                   <input class="input" type="email" name="email" placeholder="Correo">
@@ -34,10 +40,10 @@
                   </span>
               </p>
           </div>
-          <div class="field">
+          <div class="field is-grouped is-grouped-right">
               <p class="control">
                   <button class="button is-success">
-                  Login
+                    Iniciar Sesión
                   </button>
               </p>
           </div>

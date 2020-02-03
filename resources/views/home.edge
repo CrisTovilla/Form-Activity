@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <script src="/js/main.js"></script>
+    {{style('css/style.css')}}
   </head>
   <body>
   <section class="section">
@@ -112,10 +113,10 @@
           </div>
           
           
-            <div id="file-list" style="height:200px; display: flex;  overflow-x: auto;">             
-            </div>
+          <div id="file-list" style="height:200px; display: flex;  overflow-x: auto;">             
+          </div>
 
-          <div  class="file has-name">
+          <div  class="file has-name is-centered">
             <label class="file-label">
               <input id="file-upload" class="file-input" type="file" name="files_post[]" multiple onchange="javascript:updateList()" accept=".pdf, .jpg, .jpeg" />        
               <span class="file-cta">
@@ -128,9 +129,7 @@
               </span>
             </label>
           </div>
-          <p class="help is-danger">Tamaño no debe exceder a 5mb</p>
-
-          
+          <p class="help is-danger has-text-centered">Tamaño no debe exceder a 5mb</p>          
           <br>
           <div class="control">
             <button class="button is-link is-fullwidth">Enviar</button>

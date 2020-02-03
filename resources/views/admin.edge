@@ -3,17 +3,19 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Inicio de Sesión</title>
+    <title>Administrador</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script> 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     {{script('js/app')}}
+    {{style('css/style.css')}}
   </head>
   <body>
   <section class="section">
     <div class="columns is-mobile is-centered ">
       <div class="column   box" >
-        <h1 class="title is-1 has-text-centered">Posts</h1>
+        <a class="button is-primary" href="{{ route('AuthController.logout') }}">Salir</a>
+        <h1 class="title is-1 has-text-centered">Registros</h1>
           <table class="table  is-striped is-narrow is-hoverable is-fullwidth "  >
             <thead>            
               <th>Nombre</th>

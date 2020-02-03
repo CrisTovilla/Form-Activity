@@ -7,9 +7,9 @@ updateList = function() {
 
       if(input.files.item(i).name.split('.').pop()=="pdf"){
           output.innerHTML += 
-                "<figure class='image is-128x128' >"+
+                "<figure   style='width:128px; height:128px; '>"+
                 // "<a class='delete' id='file-"+i+"' onclick='javascript:deleteItem(this.id)'></a>"+
-                  "<img src='/pdf-icon.png'>"+
+                  "<img src='/pdf-icon.png'  style='width:96px; height:96px; object-fit: cover; '>"+
                     "<p class='subtitle is-6'>"+
                       input.files.item(i).name+
                     "</p>"+  
@@ -19,9 +19,9 @@ updateList = function() {
         reader.fileName =  input.files.item(i).name
         reader.onload = function (e) {
           output.innerHTML += 
-                "<figure class='image is-128x128'>"+
+                "<figure   style='width:128px; height:128px;  '>"+
                 // "<a class='delete' id='file-"+i+"' onclick='javascript:deleteItem(this.id)'></a>"+
-                  "<img src='"+e.target.result+"'>"+
+                  "<img src='"+e.target.result+"'  style='width:96px; height:96px; object-fit: cover; '>"+
                     "<p class='subtitle is-6'>"+
                       e.target.fileName+
                       "</p>"+

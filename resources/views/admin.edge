@@ -15,120 +15,126 @@
     <div class="columns  box is-multiline is-mobile ">
       <div class="column is-12 " >
         <a class="button is-primary" href="{{ route('AuthController.logout') }}">Salir</a>
-        <h1 class="title is-1 has-text-centered" style="margin-bottom:20px;">Registros</h1>
+         @if(posts.data.length>0)
+          <h1 class="title is-1 has-text-centered" style="margin-bottom:20px;">Registros</h1>
+         @else
+          <h1 class="title is-1 has-text-centered" style="margin-bottom:20px;">Upss!,Parece que no hay registros</h1>
+         @endif
       </div>
-      <div class="column  is-12 table-container" >
-          <table class="table  is-striped is-narrow is-hoverable is-fullwidth "  >
-            <thead>            
-              <th>Nombre</th>
-              <th>Edad</th>
-              <th>Posición de Trabajo</th>
-              <th>Correo</th>
-              <th>Telefono</th>
-              <th>Ubicación</th>
-              <th>Compañia</th>
-              <th></th>
-              <th></th>
-            </thead>
-            <tbody>
-            @each(post in posts.data)   
-              <tr id="{{post.id}}" >
-              <td>{{post.name}}</td>
-              <td>{{post.age}}</td>
-              <td>{{post.job_position}}</td>
-              <td>{{post.email}}</td>
-              <td>{{post.phone_number}}</td>
-              <td>{{post.location}}</td>
-              <td>{{post.company}}</td>
-              @if(post.files.length>0)
-                <td><a class="button is-info"  onClick="javascript:modalOpenFiles({{post.id}})" >Archivos</a></td>
-              @else
-                <td></td>  
-              @endif
-              <td><a class="button is-danger"  onClick="javascript:deleteItem({{post.id}})" >Eliminar</a></td>
-              </tr>
+      @if(posts.data.length>0)
+        <div class="column  is-12 table-container" >
+            <table class="table  is-striped is-narrow is-hoverable is-fullwidth "  >
+              <thead>            
+                <th>Nombre</th>
+                <th>Edad</th>
+                <th>Posición de Trabajo</th>
+                <th>Correo</th>
+                <th>Telefono</th>
+                <th>Ubicación</th>
+                <th>Compañia</th>
+                <th></th>
+                <th></th>
+              </thead>
+              <tbody>
+              @each(post in posts.data)   
+                <tr id="{{post.id}}" >
+                <td>{{post.name}}</td>
+                <td>{{post.age}}</td>
+                <td>{{post.job_position}}</td>
+                <td>{{post.email}}</td>
+                <td>{{post.phone_number}}</td>
+                <td>{{post.location}}</td>
+                <td>{{post.company}}</td>
+                @if(post.files.length>0)
+                  <td><a class="button is-info"  onClick="javascript:modalOpenFiles({{post.id}})" >Archivos</a></td>
+                @else
+                  <td></td>  
+                @endif
+                <td><a class="button is-danger"  onClick="javascript:deleteItem({{post.id}})" >Eliminar</a></td>
+                </tr>
 
-            <div class="modal" id="modal-{{post.id}}" > 
-              <div class="modal-background"></div>
-                <div class="modal-card" style="height:50%">
-                  <header class="modal-card-head">
-                    <p class="modal-card-title">Archivos</p>
-                    <button class="delete" aria-label="close" onClick="javascript:modalCloseFiles({{post.id}})"></button>
-                  </header>
-                  <section class="modal-card-body">
-                    <div class="columns is-mobile">
-                      @each(file in post.files)
-                        @if(isImage(file.filename))
-                          <div class="card"  style="width:128px; height:128px; margin-left:10px; ">
-                            <header class="card-header header-file" >
-                              <p class="card-header-title">
+              <div class="modal" id="modal-{{post.id}}" > 
+                <div class="modal-background"></div>
+                  <div class="modal-card" style="height:50%">
+                    <header class="modal-card-head">
+                      <p class="modal-card-title">Archivos</p>
+                      <button class="delete" aria-label="close" onClick="javascript:modalCloseFiles({{post.id}})"></button>
+                    </header>
+                    <section class="modal-card-body">
+                      <div class="columns is-mobile">
+                        @each(file in post.files)
+                          @if(isImage(file.filename))
+                            <div class="card"  style="width:128px; height:128px; margin-left:10px; ">
+                              <header class="card-header header-file" >
+                                <p class="card-header-title">
+                                  {{file.filename}}
+                                </p>
+                              </header>
+                                <div class="card-image" >
+                                  <figure >
+                                    <img src="{{ assetsUrl('/pdf-icon.png') }}" style="width:128px; height:128px; ">
+                                  </figure>
+                                </div>
+                                <footer class="card-footer">
+                                  <a href="{{ route('FileController.download', { id: file.id }) }}" class="card-footer-item button is-info">Descargar</a>
+                                </footer>
+                            </div>
+                          @else
+                            <div class="card"  style="width:128px; height:128px; margin-left:10px;">
+                              <header class="card-header header-file" >
+                                <p class="card-header-title">
                                 {{file.filename}}
-                              </p>
-                            </header>
+                                </p>
+                              </header>
                               <div class="card-image" >
                                 <figure >
-                                  <img src="{{ assetsUrl('/pdf-icon.png') }}" style="width:128px; height:128px; ">
+                                <img src="{{ assetsUrl('/uploads/files-'+file.form_post_id+'/'+file.filename) }}" style="width:128px; height:128px;">
                                 </figure>
                               </div>
                               <footer class="card-footer">
                                 <a href="{{ route('FileController.download', { id: file.id }) }}" class="card-footer-item button is-info">Descargar</a>
                               </footer>
-                          </div>
-                        @else
-                          <div class="card"  style="width:128px; height:128px; margin-left:10px;">
-                            <header class="card-header header-file" >
-                              <p class="card-header-title">
-                              {{file.filename}}
-                              </p>
-                            </header>
-                            <div class="card-image" >
-                              <figure >
-                              <img src="{{ assetsUrl('/uploads/files-'+file.form_post_id+'/'+file.filename) }}" style="width:128px; height:128px;">
-                              </figure>
                             </div>
-                            <footer class="card-footer">
-                              <a href="{{ route('FileController.download', { id: file.id }) }}" class="card-footer-item button is-info">Descargar</a>
-                            </footer>
-                          </div>
-                        @endif
-                      @endeach        
-                    </div>
-                  </section> 
-                </div>
-            </div>
-          
-            @endeach
-            </tbody>
-          </table>     
-      </div>
-
-      <div class="column is-12 " >
-        <nav class="pagination is-centered" role="navigation" aria-label="pagination">       
-          @if(posts.page-1  != 0)
-            <a class="pagination-previous" title="This is the first page" href="{{ '?' + append(request.originalUrl(), 'page', posts.page - 1) }}">Página Anterior</a>
-          @else
-             <a class="pagination-previous" title="This is the first page" href="{{ '?' + append(request.originalUrl(), 'page', posts.page - 1) }}" disabled>Página Anterior</a>
-          @endif
-          
-          @if(posts.page+1  != posts.lastPage+1)
-            <a class="pagination-next" href="{{ '?' + append(request.originalUrl(), 'page', posts.page + 1) }}">Siguiente Página</a>
-          @else
-            <a class="pagination-next" href="{{ '?' + append(request.originalUrl(), 'page', posts.page + 1) }}" disabled>Siguiente Página</a>
-          @endif
-          
-          <ul class="pagination-list">
-              @each(page in range(1, posts.lastPage+1))
-                <li>
-                @if(page  == posts.page)
-                  <a class="pagination-link is-current" aria-label="Page {{page}}" aria-current="page" href="{{ '?' + append(request.originalUrl(), 'page', page) }}" >{{page}}</a>
-                @else
-                  <a class="pagination-link" aria-label="Goto page {{page}}" href="{{ '?' + append(request.originalUrl(), 'page', page) }}">{{page}}</a>
-                @endif
-                </li>
-            @endeach
-          </ul>
-        </nav>
-      </div>
+                          @endif
+                        @endeach        
+                      </div>
+                    </section> 
+                  </div>
+              </div>
+            
+              @endeach
+              </tbody>
+            </table>     
+        </div>
+      
+        <div class="column is-12 " >
+          <nav class="pagination is-centered" role="navigation" aria-label="pagination">       
+            @if(posts.page-1  != 0)
+              <a class="pagination-previous" title="This is the first page" href="{{ '?' + append(request.originalUrl(), 'page', posts.page - 1) }}">Página Anterior</a>
+            @else
+              <a class="pagination-previous" title="This is the first page" href="{{ '?' + append(request.originalUrl(), 'page', posts.page - 1) }}" disabled>Página Anterior</a>
+            @endif
+            
+            @if(posts.page+1  != posts.lastPage+1)
+              <a class="pagination-next" href="{{ '?' + append(request.originalUrl(), 'page', posts.page + 1) }}">Siguiente Página</a>
+            @else
+              <a class="pagination-next" href="{{ '?' + append(request.originalUrl(), 'page', posts.page + 1) }}" disabled>Siguiente Página</a>
+            @endif
+            
+            <ul class="pagination-list">
+                @each(page in range(1, posts.lastPage+1))
+                  <li>
+                  @if(page  == posts.page)
+                    <a class="pagination-link is-current" aria-label="Page {{page}}" aria-current="page" href="{{ '?' + append(request.originalUrl(), 'page', page) }}" >{{page}}</a>
+                  @else
+                    <a class="pagination-link" aria-label="Goto page {{page}}" href="{{ '?' + append(request.originalUrl(), 'page', page) }}">{{page}}</a>
+                  @endif
+                  </li>
+              @endeach
+            </ul>
+          </nav>
+        </div>
+      @endif
       
     </div>
   </section>

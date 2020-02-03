@@ -62,7 +62,7 @@ class FormPostController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async store ({ request, response , view}) {
     //get data from request
     let {name ,age ,job_position ,email , phone_number ,location ,company} = request.only(['name','age','job_position','email','phone_number','location','company'])
     const file_posts = request.file('files_post')
@@ -109,7 +109,7 @@ class FormPostController {
          })
         }
       }
-      return response.redirect('/')
+      return view.render('home-acepted')
     } catch (error) {
       return response.status(500).send('Server Error')
     }

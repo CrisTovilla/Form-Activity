@@ -1,3 +1,4 @@
+//Request for the delete of a Post
 const deleteItem = async (id) => { 
         try {
             const res = await axios.delete('/api/v1/formposts/'+id)
@@ -10,13 +11,13 @@ const deleteItem = async (id) => {
         }
 }
 
+/** Modal od the File Interaction */
 modalOpenFiles = function(id){
     var el = document.getElementById('modal-'+id)
     el.classList.add("is-active");  
 }
-
-
 modalCloseFiles = function(id){
     var el = document.getElementById('modal-'+id)
     el.classList.remove("is-active"); 
 }
+/////////////////////////////

@@ -14,8 +14,11 @@ class FileController {
    * @param {Response} ctx.response
    */
   async download ({ request, params, response }) {
+    //retireve id params
     let {id} = params
+    //search for the object file
     const file =  await File.findOrFail(id)
+    //return the file to the client 
     return response.attachment(
         Helpers.publicPath('uploads/files-'+file.form_post_id+'/'+file.filename)
     )

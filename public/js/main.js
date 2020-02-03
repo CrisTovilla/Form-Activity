@@ -1,15 +1,21 @@
+//Onchange of the InputFile
 updateList = function() {
+    //Change the visibility of the info file size 
     document.getElementById("danger-size").style= 'visibility:hidden;'
+    //Retrieve the object from the InputFile an the Container HTML
     var input = document.getElementById('file-upload');
     var output = document.getElementById('file-list');
 
+    //Insert a preview of the Files into the container
     output.innerHTML = '<div>';
     for (var i = 0; i < input.files.length; ++i) {
+      //Check the size limit for each file
       if(input.files.item(i).size>5e6){
         document.getElementById("danger-size").style= 'visibility:visible;'
         break;
       }
 
+      //Insert into the container based on the extension file
       if(input.files.item(i).name.split('.').pop()=="pdf"){
           output.innerHTML += 
                 "<div class='card'  style='width:128px; height:128px; margin-left:10px; margin-top:10px;'>"+
@@ -25,6 +31,7 @@ updateList = function() {
                   "</div>"+
                 "</div>"
       }else{  
+        //Use of Reader to get The data from each file
         var reader = new FileReader();
         reader.fileName =  input.files.item(i).name
         reader.onload = function (e) {

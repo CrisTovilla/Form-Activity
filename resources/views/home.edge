@@ -14,8 +14,7 @@
     <div class="columns  is-centered">
       <div class="column   is-half box">
         <form method="POST" action='{{ route('FormPostController.store') }}' enctype="multipart/form-data">
-          {{ csrfField() }}
-          
+          {{ csrfField() }}  
           <h1 class="title is-1 has-text-centered">Formulario</h1>
 
           <div class="field is-horizontal">
@@ -58,7 +57,6 @@
 
           <div class="field is-horizontal">
             <div class="field-body">
-
               <div class="field">
                 <label class="label">Email</label>
                 <div class="control has-icons-left ">
@@ -74,14 +72,12 @@
                 <label class="label">Telefono</label>
                 <div class="control has-icons-left ">
                   <input class="input" type="number" placeholder="Ingresa tu Número de telefono" name="phone_number" value="{{old('phone_number','')}}" required>
-                  {{elIf ('<p class="help is-danger">Telefono no Valido</p>',getErrorFor('phone_number'),hasErrorFor('phone_number'))}}
-              
+                  {{elIf ('<p class="help is-danger">Telefono no Valido</p>',getErrorFor('phone_number'),hasErrorFor('phone_number'))}}         
                   <span class="icon is-small is-left">
                   <i class="fas fa-phone"></i>
                 </span>
                 </div>
               </div>
-         
             </div>
           </div>
         

@@ -18,7 +18,7 @@ class FormPostController {
    */
   constructor () {
     this.page = 1
-    this.perPage = 2
+    this.perPage = 1
   }
   /**
    * Show a list of all formposts.
@@ -83,6 +83,7 @@ class FormPostController {
                 filename = `FormPost File ${new Date().getTime()}.${file.subtype}`
               else
                 filename = file.clientName
+              console.log(filename)
               await file.move(Helpers.publicPath('uploads/files-'+formpost.id), {
                   name: filename
               })
@@ -102,6 +103,7 @@ class FormPostController {
       }
       return response.redirect('/')
     } catch (error) {
+      console.log(error)
       return response.status(500).send('Server Error')
     }
   }

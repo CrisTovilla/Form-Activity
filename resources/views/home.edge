@@ -11,8 +11,8 @@
   </head>
   <body>
   <section class="section">
-    <div class="columns is-mobile is-centered">
-      <div class="column is-is-three-fifths-mobile  is-half-desktop box">
+    <div class="columns  is-centered">
+      <div class="column   is-half box">
         <form method="POST" action='{{ route('FormPostController.store') }}' enctype="multipart/form-data">
           {{ csrfField() }}
           
@@ -113,7 +113,7 @@
           </div>
           
           
-          <div id="file-list" style="height:200px; display: flex;  overflow-x: auto;">             
+          <div id="file-list" class="columns is-mobile" style="margin-top:10px; margin-left:10px; margin-right:10px;">             
           </div>
 
           <div  class="file has-name is-centered">
@@ -129,7 +129,7 @@
               </span>
             </label>
           </div>
-          <p class="help is-danger has-text-centered">Tamaño no debe exceder a 5mb</p>          
+          <p id="danger-size" class="help is-danger has-text-centered" style="visibility:hidden;">Tamaño no debe exceder a 5mb</p>          
           <br>
           <div class="control">
             <button class="button is-link is-fullwidth">Enviar</button>

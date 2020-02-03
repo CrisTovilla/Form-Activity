@@ -18,7 +18,7 @@ class FormPostController {
    */
   constructor () {
     this.page = 1
-    this.perPage = 1
+    this.perPage = 5
   }
   /**
    * Show a list of all formposts.
